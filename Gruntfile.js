@@ -101,7 +101,7 @@ module.exports = function (grunt) {
                 port: 9000,
                 livereload: 35729,
                 // Change this to '0.0.0.0' to access the server from outside
-                hostname: 'localhost'
+                hostname: '0.0.0.0'
             },
             livereload: {
                 options: {
@@ -185,7 +185,7 @@ module.exports = function (grunt) {
         // Add vendor prefixed styles
         autoprefixer: {
             options: {
-                browsers: ['last 1 version']
+                browsers: ['last 2 version', 'ie 10', 'ff 19']
             },
             dist: {
                 files: [{
@@ -356,7 +356,7 @@ module.exports = function (grunt) {
             modifyVars: lessVars
           },
           all: {
-            src: ['<%= yeoman.app %>/styles/*.less'],
+            src: ['<%= yeoman.app %>/styles/main.less'],
             dest: '<%= yeoman.app %>/styles/main.css'
           }
         },
