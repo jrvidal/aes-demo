@@ -1,0 +1,254 @@
+@import "bootstrap.less";
+
+@cellWidth: 65px;
+@cellTextSize: 25px;
+
+body {
+  background:
+  radial-gradient(black 15%, transparent 16%) 0 0,
+  radial-gradient(black 15%, transparent 16%) 8px 8px,
+  radial-gradient(rgba(255,255,255,.1) 15%, transparent 20%) 0 1px,
+  radial-gradient(rgba(255,255,255,.1) 15%, transparent 20%) 8px 9px;
+  background-color:#282828;
+  background-size:16px 16px;
+}
+
+.main {
+  background-color: white;
+  max-width: 960px;
+  margin: auto;
+}
+
+h1 {
+  font-size: 4em;
+  text-align: center;
+}
+
+p {
+  font-size: 1.2em;
+}
+
+.aes-settings-container {
+  margin-bottom: 20px;
+}
+
+.round, .result, .currentOp {
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.result-text {
+  font-family: monospace;
+}
+
+.step {
+  min-height: @cellWidth*4 + 100px;
+}
+
+.currentOp {
+  font-family: monospace;
+  margin-bottom: 20px;
+}
+
+.state {
+  @borderWidth: 2px;
+
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  width: 4*@cellWidth + 2*@borderWidth;
+  height: 4*@cellWidth + 2*@borderWidth;
+
+  border: @borderWidth solid black;
+
+  background: radial-gradient(circle at 30% 30%, #aaa 0%, #555 70%);
+}
+
+@cellColor: yellow;
+
+.state-cell {
+  width: @cellWidth;
+  height: @cellWidth;
+  line-height: @cellWidth;
+  text-align: center;
+
+  font-size: @cellTextSize;
+  font-family: monospace;
+
+  overflow: hidden;
+
+  color: black;
+  text-shadow: 0px 1px 0px rgba(255, 255, 255, .7);
+
+  border: 1px solid black;
+  font-weight: bold;
+
+  background-color: rgba(0, 0, 0, 0)
+}
+
+.state-value {
+  width: @cellWidth;
+  height: @cellWidth;
+}
+
+input {
+  font-family: monospace;
+}
+
+// AES
+@subBytesDuration: 0.2s;
+
+@mixColumnsDuration: 0.15s;
+
+@shiftRowsDuration: 0.3s;
+
+@addRoundKeyDuration: 0.2s;
+@addRoundKeyRowDuration: 0.3s;
+
+.@{subBytesClass} > .state-value {
+  animation-name: subbytes;
+  animation-duration: @subBytesDuration;
+  animation-iteration-count: 1;
+}
+
+
+@keyframes subbytes {
+  from {
+  }
+  to {
+    transform: translateY(-@cellWidth);
+  }
+}
+
+.@{mixColumnsClass} > .state-value {
+  animation-name: mixcolumns;
+  animation-duration: @mixColumnsDuration;
+  animation-iteration-count: 2;
+  animation-direction: alternate;
+  animation-timing-function: ease-out;
+}
+
+
+@keyframes mixcolumns {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(1.2);
+    background: rgba(220, 220, 220, 0.5);
+  }
+}
+
+.@{shiftRowsClass}, .@{invShiftRowsClass} {
+  animation-duration: @shiftRowsDuration;
+  animation-iteration-count: 1;
+  animation-direction: alternate;
+  animation-fill-mode: forwards;
+}
+
+.@{shiftRowsParentClass} {
+  overflow: hidden;
+}
+
+.@{invShiftRowsClass} {
+  transform: translateX(-4*@cellWidth);
+}
+
+.rows_loop(@class, @counter) when(@counter > 0) {
+  .@{class}.@{shiftRowsRowClass}@{counter} {
+    animation-name: ~"@{class}_@{counter}";
+  }
+
+  .rows_loop(@class, @counter - 1);
+}
+
+.rows_loop(@shiftRowsClass, 3);
+.rows_loop(@invShiftRowsClass, 3);
+
+.rows_keyframes_frames(@counter, @dir) when (@dir = 1) {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-@cellWidth*@counter);
+  }
+}
+
+.rows_keyframes_frames(@counter, @dir) when (@dir = -1) {
+  0% {
+    transform: translateX(-4*@cellWidth);
+  }
+  100% {
+    transform: translateX(@cellWidth*(@counter - 4));
+  }
+}
+
+.rows_keyframes(@total, @name, @dir: 1) when (@total > 0) {
+  @realName: ~"@{name}_@{total}";
+  @keyframes @realName {
+    .rows_keyframes_frames(@total, @dir);
+  }
+
+  .rows_keyframes(@total - 1, @name, @dir)
+}
+
+@rows: 3;
+.rows_keyframes(@rows, @shiftRowsClass);
+.rows_keyframes(@rows, @invShiftRowsClass, -1);
+
+// AddRoundKey
+
+.@{addRoundKeyClass} {
+  animation-name: addroundkey;
+  animation-duration: @addRoundKeyDuration;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
+}
+
+.addRoundKeyEnd() {
+  color: rgba(0, 0, 0, 0);
+  text-shadow: 0px -1px 0px rgba(0,0,0,0);
+}
+
+.@{addRoundKeyEndClass} {
+  .addRoundKeyEnd();
+}
+
+
+@keyframes addroundkey {
+  from {
+  }
+  to {
+    .addRoundKeyEnd();
+  }
+}
+
+.@{newRoundKeyParentClass}, .@{invNewRoundKeyParentClass} {
+  overflow: hidden;
+}
+
+.@{invNewRoundKeyParentClass} > .state-cell {
+  transform: translateX(-4*@cellWidth);
+}
+
+.@{invNewRoundKeyParentClass} > .@{newRoundKeyRowClass} {
+  animation-name: invnewroundkeyrow;
+}
+
+.@{newRoundKeyParentClass} > .@{newRoundKeyRowClass} {
+  animation-name: newroundkeyrow;
+}
+
+.@{newRoundKeyRowClass} {
+  animation-duration: @addRoundKeyRowDuration;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
+}
+
+@keyframes newroundkeyrow {
+  .rows_keyframes_frames(4, 1);
+}
+
+@keyframes invnewroundkeyrow {
+  .rows_keyframes_frames(4, -1);
+}

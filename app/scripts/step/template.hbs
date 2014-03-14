@@ -1,0 +1,21 @@
+{{#if finished}}
+  <div class="row">
+    <div class="result col-md-offset-2 col-xs-8">Result: <span class="result-text">{{result}}</span></div>
+  </div>
+{{else}}
+  <div class="row">
+    <div class="round col-md-offset-2 col-xs-8">Round: {{round}}</div>
+  </div>
+{{/if}}
+<div class="row">
+  <div class="col-xs-8 col-md-offset-2 currentOp {{#if finished}}invisible{{/if}}">{{nextOp.value}}</div>
+</div>
+<div class="row">
+  <div class="col-xs-4 col-md-offset-2">
+    <div class="roundkey"></div>
+  </div>
+
+  <div class="col-xs-4">
+    <div class="aes-state"></div>
+  </div>
+</div>

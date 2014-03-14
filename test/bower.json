@@ -1,0 +1,13 @@
+{
+  "name": "aes",
+  "private": true,
+  "dependencies": {
+    "chai": "~1.8.0",
+    "mocha": "~1.14.0",
+    "requirejs": "~2.1.11",
+    "sinonjs": "~1.8.2"
+  },
+  "devDependencies": {
+    "less.js": "1.7.0"
+  }
+}

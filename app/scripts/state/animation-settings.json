@@ -1,0 +1,26 @@
+{
+  "delays": {
+    "SUB_BYTES": 30,
+    "ADD_ROUND_KEY": 30,
+    "MIX_COLUMNS": 80,
+    "SHIFT_ROWS": 30,
+    "NEW_ROUND_KEY": 30
+  },
+  "classes": {
+    "SUB_BYTES": "subbytes",
+
+    "MIX_COLUMNS": "mixcolumns",
+
+    "SHIFT_ROWS": "shiftrows",
+    "SHIFT_ROWS_PARENT": "shiftrows-parent",
+    "INV_SHIFT_ROWS": "invshiftrows",
+    "SHIFT_ROWS_ROW": "row-",
+
+    "ADD_ROUND_KEY": "addroundkey",
+    "ADD_ROUND_KEY_END": "addroundkey-end",
+
+    "NEW_ROUND_KEY_PARENT": "newroundkey-parent",
+    "INV_NEW_ROUND_KEY_PARENT": "invnewroundkey-parent",
+    "NEW_ROUND_KEY_ROW": "newroundkey-row"
+  }
+}

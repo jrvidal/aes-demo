@@ -1,0 +1,11 @@
+<div class="state">
+  {{#each cells}}
+    <div
+      class="state-cell"
+      data-column={{this.column}}
+      data-row={{this.row}}
+    >
+      <div class="state-value">{{this.value}}</div>
+    </div>
+  {{/each}}
+</div>

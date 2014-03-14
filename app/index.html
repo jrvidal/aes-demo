@@ -1,0 +1,96 @@
+<!doctype html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>AES demo</title>
+        <meta name="description" content="A demo web app showing the inner workings of Rinjdael">
+        <meta name="viewport" content="width=device-width">
+
+        <!-- build:css(.tmp) styles/main.css -->
+        <link rel="stylesheet" href="styles/main.css">
+        <!-- endbuild -->
+    </head>
+    <body>
+        <!--[if lt IE 10]>
+            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+        <div class="main container">
+          <div class="row">
+            <div class="col-xs-12">
+              <h1>AES web demo</h1>
+              <p> The <a href="https://en.wikipedia.org/wiki/Advanced_Encryption_Standard">Advanced Encryption Standard</a> or AES is based on a cipher called Rinjdael. Its inner workings are defined in a <a href="http://csrc.nist.gov/publications/fips/fips197/fips-197.pdf">pretty readable spec</a>. But I think that everything looks just better with a web demo.
+            </div>
+          </div>
+
+          <div class="main-view row">
+            <div class="col-xs-12 aes-settings-container">
+              <form class="aes-settings">
+                <div class="row">
+                  <div class="form-group col-xs-7">
+                    <label class="control-label">Key (16, 24 or 32 bytes)</label>
+                    <input class="form-control" type="text" placeholder="Key (hex digits)"
+                      pattern="[0-9a-fA-F]{32}|[0-9a-fA-F]{48}|[0-9a-fA-F]{64}" required
+                      name="aes-key" spellcheck="false">
+                  </div>
+
+                </div>
+
+                <div class="row">
+                  <div class="form-group col-xs-6 col">
+                    <label class="control-label">Input (16 bytes)</label>
+                    <input class="form-control" type="text"placeholder="Input (hex digits)"
+                      pattern="[0-9a-fA-F]{32}" required name="aes-input" spellcheck="false">
+                  </div>
+
+                  <div class="form-group col-xs-3">
+                    <label class="control-label">Mode</label>
+                    <select class="form-control" name="aes-mode">
+                      <option value="encrypt">Encrypt</option>
+                      <option value="decrypt">Decrypt</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-xs-12">
+                    <button class="go btn">Go!</button>
+                    <button class="random btn">Random</button>
+                  </div>
+                </div>
+              </form>
+            </div>
+
+            <div class="step col-xs-12"></div>
+          </div>
+        </div>
+
+
+        <!-- build:js({app,.tmp}) scripts/scripts.js -->
+        <script src="bower_components/requirejs/require.js"></script>
+        <script src="scripts/require.config.js"></script>
+        <!-- endbuild -->
+
+        <script>
+          'use strict';
+          require(['jquery', 'main/view'], function ($, View) {
+            new View({
+              el: $('.main-view')
+            });
+          });
+          </script>
+
+        <script>
+            (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
+            function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;
+            e=o.createElement(i);r=o.getElementsByTagName(i)[0];
+            e.src='//www.google-analytics.com/analytics.js';
+            r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));
+            ga('create','UA-XXXXX-X');ga('send','pageview');
+        </script>
+
+</body>
+</html>
