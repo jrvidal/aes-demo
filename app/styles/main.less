@@ -3,7 +3,8 @@
 @cellWidth: 65px;
 @cellTextSize: 25px;
 
-body {
+html {
+  height: 100%;
   background:
   radial-gradient(black 15%, transparent 16%) 0 0,
   radial-gradient(black 15%, transparent 16%) 8px 8px,
@@ -11,6 +12,10 @@ body {
   radial-gradient(rgba(255,255,255,.1) 15%, transparent 20%) 8px 9px;
   background-color:#282828;
   background-size:16px 16px;
+}
+
+body {
+  min-height: 100%;
 }
 
 .main {
@@ -32,7 +37,8 @@ p {
   margin-bottom: 20px;
 }
 
-.round, .result, .currentOp {
+
+.round, .result, .currentOp, .state-description {
   font-weight: bold;
   font-size: 20px;
 }
